@@ -66,4 +66,71 @@ function display(stack) {
   }
 }
 
-console.log(display(main()));
+//console.log(display(main()));
+
+
+function is_palindrome(string) {
+  string = string.toLowerCase().replace(/[^a-zA-Z0-9]/g, '');
+
+  let stringStacker = new Stack;
+  for (let i=0; i<string.length; i++){
+    stringStacker.push(string[i]);
+  }
+
+  let reversedString = '';
+  let currNode = stringStacker.top;
+  while(currNode !== null){
+    reversedString += currNode.value;
+    currNode = currNode.next;
+  }
+  if(string === reversedString){
+    console.log("It IS a palindrome!! ");
+    return;
+  }
+  else {
+    console.log("Sorry, it is not a palindrome.");
+  }
+}
+
+//is_palindrome('race car');
+
+
+function bracketsMatcher(string){
+  let bracketStack = new Stack;
+
+  for(let i=string.length-1; i>=0; i--){
+    if(string[i] === '(' || ')'){
+      bracketStack.push('string[i]');
+    }
+  }
+  let currNode = bracketStack.top;
+  if(currNode.value === ')'){
+    console.log('A closing parenthesis needs to be preceeded by an opener');
+    return;
+  }
+  let open = 0;
+  let closed = 0;
+
+  while(currNode !== null){
+    if(currNode.value === '('){
+      open++;
+    }
+    else if(currNode.value === ')'){
+      closed++;
+    }
+    if(closed > open){
+      console.log('You are missing a "(" for closing parenthesis number:' + closed);
+      return;
+    }
+    currNode = currNode.next;
+  }
+
+  if(open !== closed) {
+    console.log('Opening parenthesis total: ' + open);
+    console.log('Closing parentheses total: ' + closed);
+    return;
+  }
+
+}
+bracketsMatcher('((x+y)*(((m+n))');
+//((x+y)*3)*(m+n)
