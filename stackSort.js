@@ -27,65 +27,45 @@ class Stack {
   }
 }
 
-function peek(stack){
-  console.log(stack.top.value);
-  return stack.top.value;
-}
-
-function displayStack(stack) {
+function displayStackContent(stack) {
   let currNode = stack.top;
-
+  let resultsArray = [];
   while(currNode !== null){
-    console.log(currNode.value);
+    resultsArray.push(currNode.value);
     currNode = currNode.next;
   }
+  return resultsArray;
 }
 
 
-function stackSorter(arrayOfValues){
-
+function newSorter(arrayOfValues){
   let stackA = new Stack;
+  let stackB = new Stack;
+  let tempVar;
+
   for (let i=0; i<arrayOfValues.length; i++){
     stackA.push(arrayOfValues[i]);
   }
-  displayStack(stackA);
-  console.log(stackA.top.value);
+  console.log('Values to sort: ')
+  console.log(displayStackContent(stackA));
 
-  let stackB = new Stack;
   stackB.push(stackA.pop());
-
-  let tempVar = stackA.pop();
-  console.log(tempVar);
-
-  while(stackA !== null){
-    if(stackA.top.value < tempVar && stackA.top.value > stackB.top.value){
-      stackB.push(stackA.pop());
-      console.log('line 62');
-      console.log(stackB.top.value);
-    } 
-    else if (stackA.top < tempVar && stackA.top < stackB.top){
+ 
+  while(stackA.top !== null){
+    tempVar = stackA.pop();
+    if(tempVar > stackB.top.value){
       stackB.push(tempVar);
-      tempVar = stackA.pop;
-      while(stackB.top > tempVar) {
+    } else if (tempVar < stackB.top.value){
+      while(stackB.top !== null && tempVar < stackB.top.value){
         stackA.push(stackB.pop());
-        console.log('line 70')
-        console.log(stackB.top.value);
-
       }
       stackB.push(tempVar);
-      tempVar = stackA.top;
     }
-    else if(stackA.top > tempVar){
-      stackB.push(tempVar);
-      tempVar = stackA.top;
-    }  
   }
-  stackB.push(tempVar);
-  displayStack(stackB);
+  console.log('Sorted stack contains: ');
+  console.log(displayStackContent(stackB));
+  return; 
 }
 
-stackSorter([6, 10, 7, 2, 3, 5]);
-stackSorter([10, 2, 5, 7, 3, 6]);
-stackSorter([2, 7, 6, 10, 5, 3]);
-stackSorter([7, 3, 2, 6, 5, 10]);
-
+newSorter([1, 3, 5, 7, 9, 8, 6, 4, 2]);
+newSorter([21, 19, 52, 73, 65, 44, 98, 36, 81]);
