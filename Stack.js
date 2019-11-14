@@ -1,27 +1,27 @@
 'use strict';
 
 class _Node {
-  constructor(value, next){
+  constructor(value, next) {
     this.value = value;
     this.next = next;
   }
 }
 
 class Stack {
-  constructor(){
+  constructor() {
     this.top = null;
   }
 
-  push(value){
-    if (this.top === null){
+  push(value) {
+    if (this.top === null) {
       this.top = new _Node(value, null);
       return;
     }
-    this.top = new _Node(value, this.top); 
+    this.top = new _Node(value, this.top);
   }
 
-  pop(){
-    if (this.top === null){
+  pop() {
+    if (this.top === null) {
       console.log('There are no items in the stack');
       return;
     }
@@ -32,12 +32,12 @@ class Stack {
 
 
 }
-function peek(stack){
+function peek(stack) {
   return stack.top.value;
 }
 
-function isEmpty(stack){
-  if(stack.top === null){
+function isEmpty(stack) {
+  if (stack.top === null) {
     console.log('The stack is empty');
     return;
   }
@@ -60,7 +60,7 @@ function main() {
 function display(stack) {
   let currNode = stack.top;
 
-  while(currNode !== null){
+  while (currNode !== null) {
     console.log(currNode.value);
     currNode = currNode.next;
   }
@@ -73,17 +73,17 @@ function is_palindrome(string) {
   string = string.toLowerCase().replace(/[^a-zA-Z0-9]/g, '');
 
   let stringStacker = new Stack;
-  for (let i=0; i<string.length; i++){
+  for (let i = 0; i < string.length; i++) {
     stringStacker.push(string[i]);
   }
 
   let reversedString = '';
   let currNode = stringStacker.top;
-  while(currNode !== null){
+  while (currNode !== null) {
     reversedString += currNode.value;
     currNode = currNode.next;
   }
-  if(string === reversedString){
+  if (string === reversedString) {
     console.log("It IS a palindrome!! ");
     return;
   }
@@ -95,45 +95,44 @@ function is_palindrome(string) {
 //is_palindrome('race car');
 
 
-// function bracketsMatcher(string){
-//   let bracketStack = new Stack;
-  
-//   for(let i=string.length-1; i>=0; i--){
-//     if(string[i] === '(' || string[i] === ')'){
-//       bracketStack.push(string[i]);
-//     }
-//   }
-//   console.log(display(bracketStack));
-//   let currNode = bracketStack.top;
-//   if(currNode.value === ')'){
-//     console.log('A closing parenthesis needs to be preceeded by an opener');
-//     return;
-//   }
-//   let open = 0;
-//   let closed = 0;
+function bracketsMatcher(string) {
+  let bracketStack = new Stack;
 
-//   while(currNode !== null){
-//     if(currNode.value === '('){
-//       open++;
-//     }
-//     else if(currNode.value === ')'){
-//       closed++;
-//     }
-//     if(closed > open){
-//       console.log('You are missing a "(" for closing parenthesis number:' + closed);
-//       return;
-//     }
-//     currNode = currNode.next;
-//   }
+  for (let i = string.length - 1; i >= 0; i--) {
+    if (string[i] === '(' || string[i] === ')') {
+      bracketStack.push(string[i]);
+    }
+  }
+  console.log(display(bracketStack));
+  let currNode = bracketStack.top;
+  if (currNode.value === ')') {
+    console.log('A closing parenthesis needs to be preceeded by an opener');
+    return;
+  }
+  let open = 0;
+  let closed = 0;
 
-//   if(open !== closed) {
-//     console.log('Opening parenthesis total: ' + open);
-//     console.log('Closing parentheses total: ' + closed);
-//     console.log('You have unclosed parenthesis');
-//     return;
-//   }
+  while (currNode !== null) {
+    if (currNode.value === '(') {
+      open++;
+    }
+    else if (currNode.value === ')') {
+      closed++;
+    }
+    if (closed > open) {
+      console.log('You are missing a "(" for closing parenthesis number:' + closed);
+      return;
+    }
+    currNode = currNode.next;
+  }
 
-// }
+  if (open !== closed) {
+    console.log('Opening parenthesis total: ' + open);
+    console.log('Closing parentheses total: ' + closed);
+    console.log('You have unclosed parenthesis');
+    return;
+  }
+}
 
 // ()()(x+b(x+c*m)
 
@@ -142,24 +141,24 @@ function is_palindrome(string) {
 
 function parenthesesStack(str) {
   let tempStack = new Stack;
-  for(let i = 0; i < str.length; i++){
-    if(str[i] === '('){
+  for (let i = 0; i < str.length; i++) {
+    if (str[i] === '(') {
       tempStack.push(i);
     }
-    if(str[i] === ')' && tempStack.top === null){
+    if (str[i] === ')' && tempStack.top === null) {
       console.log(`There is an unopened closing parenthesis at ${i}`);
       return;
     }
-    if(str[i] === ')' && tempStack.top){
+    if (str[i] === ')' && tempStack.top) {
       tempStack.pop();
     }
   }
 
-  if(tempStack){
+  if (tempStack) {
     let currNode = tempStack.top;
     let unclosed = 'You have unclosed parenthesis at string index ';
 
-    while(currNode !== null){
+    while (currNode !== null) {
       unclosed += `${tempStack.pop()} `;
       currNode = currNode.next;
     }
@@ -170,7 +169,7 @@ function parenthesesStack(str) {
 
 // parenthesesStack('()(((()(x+b(x+c*m)');
 
-function generateStack(arr){
+function generateStack(arr) {
   let numStack = new Stack;
   arr.map(num => numStack.push(num));
   return numStack;
@@ -184,14 +183,14 @@ function sortStack(stack) {
   let temp = 0;
   temp = stack.pop();
 
-  while(stack.top !== null){ 
+  while (stack.top !== null) {
 
-    if(tempStack.top === null || temp > peek(tempStack) || peek(stack) > peek(tempStack)){
-      if(temp < peek(stack)){
+    if (tempStack.top === null || temp > peek(tempStack) || peek(stack) > peek(tempStack)) {
+      if (temp < peek(stack)) {
         tempStack.push(temp);
         temp = stack.pop();
       }
-      else if(tempStack.top === null || peek(stack) < peek(tempStack)) {
+      else if (tempStack.top === null || peek(stack) < peek(tempStack)) {
         tempStack.push(stack.pop());
       }
       // else{
