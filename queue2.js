@@ -18,27 +18,21 @@ class DoublyLLQueue {
       this.tail = newNode;
     } 
     else {
-      let temp = this.tail;
+      newNode.prev = this.tail;
+      this.tail.next = newNode;
       this.tail = newNode;
-      newNode.prev = temp;
-      temp.next = newNode;
     }
   }
   dequeue(){
-    if(!this.head) {
-      return undefined;
-    }
-    let temp = this.head;
-    if(this.length === 1){
+    if(!this.head) { return; }
+
+    let topNode = this.head;
+    this.head = topNode.next;
+
+    if(topNode === this.tail){
       this.head = null;
       this.tail = null;
     }
-    else{
-      this.head = temp.next;
-      this.head.prev = null;
-      temp.next = null; //check this line
-    }
-    return this.value;
+    return topNode.value;
   }
-
 }
